@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 624b2b94908535840a7d811435621b04, type: 3}
+  m_Name: ManagerCharacterSO
+  m_EditorClassIdentifier: 
+  listCharacterSO:
+  - {fileID: 11400000, guid: f193bca16123b21439f44eae681a9c71, type: 2}
+  - {fileID: 11400000, guid: 11e51600a66e4bc418dbd44c9fea212a, type: 2}
+  - {fileID: 11400000, guid: 86a44d4c86ba71742be7b489c19d00a7, type: 2}
+  - {fileID: 11400000, guid: b5bd1ea9721432b42b472109d16fbc23, type: 2}
+  - {fileID: 11400000, guid: 92cd9280964b1b244b1931f4acce52e6, type: 2}
+  - {fileID: 11400000, guid: 7b1339b0b954e504da2b48543e4040da, type: 2}
+  - {fileID: 11400000, guid: 5fe57ca5c0369dc41877addc2d6ef956, type: 2}
+  listCharacter:
+  - {fileID: 3151044076527278517, guid: f79794943f497e04c934829fe362eba3, type: 3}
+  - {fileID: 2087382222400750764, guid: 5a84da9aa46a3754980a7a6c3ee2f50b, type: 3}
+  listTower:
+  - {fileID: 4805629891448425324, guid: 586465c0cec532642aef6cb4ed66f331, type: 3}
+  - {fileID: 9166502031875713373, guid: 145821bb7a8e8b945a9a6af52de5de6b, type: 3}
+  listModel:
+  - {fileID: 6844633858286392545, guid: c40c0aa271df9c94285b561275ab8459, type: 3}
+  - {fileID: 3328436526583236427, guid: 1147b9a255d2ebb498bcad9c8c3ab4b5, type: 3}
+  - {fileID: 5643201269328383556, guid: deff3a6e633472044b9af02dc9fb88c5, type: 3}
+  - {fileID: 1137525654844027569, guid: 9e7015f40a27f104f9a14eeec6fd99df, type: 3}
+  - {fileID: 2973999758023527908, guid: 0ab8c5fc4ea4ca84a9b3241775940ced, type: 3}
+  listWeaponInfo:
+  - {fileID: 11400000, guid: a3e3eeac7cf1b874ba009c702af18230, type: 2}
+  - {fileID: 11400000, guid: a33b1c659ce098a448940f4627f51965, type: 2}
+  - {fileID: 11400000, guid: ba2e1fcbb837d05458bc5a9329530062, type: 2}
+  - {fileID: 11400000, guid: c92a8714bd11e18468442e1731ed00c7, type: 2}
+  listBulletInfo:
+  - {fileID: 11400000, guid: 5d438b96be95a214f915b5212cfcb7bc, type: 2}
+  - {fileID: 11400000, guid: 1fa9c29f203fbc34baac72e61cf657c8, type: 2}
+  listBullet:
+  - {fileID: 5690752859497089992, guid: 91d8d2e5ee4c1334aa5ba4ae3479a6ee, type: 3}
+  listBulletModel:
+  - {fileID: 8676734366476067642, guid: c9b3080432288b644a15b4ebe9a90168, type: 3}
+  - {fileID: 97126404212146855, guid: 149f065be895fb34f9903825ffb2a00e, type: 3}
+  listAnimatorOverride:
+  - {fileID: 11400000, guid: 568f798916f56174f921d83d0fb435de, type: 2}
+  - {fileID: 11400000, guid: 8e57193766ba5c84492344821b1b8c8f, type: 2}
+  - {fileID: 11400000, guid: 005ddd9048c3140458b55467206ff6df, type: 2}
+  - {fileID: 11400000, guid: b3501f65445d4f04fab6fc73402e3853, type: 2}
+  - {fileID: 11400000, guid: eedda4bc43258c843a6707247d13c937, type: 2}
