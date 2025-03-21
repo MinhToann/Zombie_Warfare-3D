@@ -9,4 +9,17 @@ public class CanvasLose : UICanvas
         base.Setup();
         GameManager.ChangeState(GameState.Lose);
     }
+    public void ExitButton()
+    {
+        UIManager.Ins.CloseAll();
+        LevelManager.Ins.ResetAll();
+        UIManager.Ins.OpenUI<CanvasChangeScene>();
+    }
+    public void RetryButton()
+    {
+        Close(0);
+        LevelManager.Ins.ResetAll();
+        UIManager.Ins.GetUI<CanvasGameplay>().Setup();
+        UIManager.Ins.GetUI<CanvasGameplay>().Open();
+    }    
 }

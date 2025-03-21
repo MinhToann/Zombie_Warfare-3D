@@ -9,6 +9,7 @@ public class UICanvas : MonoBehaviour
     protected GameState gameState;
     private Transform tf;
     private string currentAnim;
+    
     public Transform TF
     {
         get
@@ -36,10 +37,14 @@ public class UICanvas : MonoBehaviour
             rect.offsetMax = rightTop;
         }
     }
-
+    
     public virtual void Setup()
     {
 
+    }
+    public virtual void Update()
+    {
+        
     }
 
     public virtual void Open()

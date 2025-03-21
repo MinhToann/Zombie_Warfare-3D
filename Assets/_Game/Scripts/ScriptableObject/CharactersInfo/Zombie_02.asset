@@ -16,11 +16,11 @@ MonoBehaviour:
   gameObjectType: 51
   hp: 32
   damage: 3
-  moveSpeed: 0.8
+  moveSpeed: 0.75
   atkSpeed: 1.2
   nameInfo: Zombie_02
   icon: {fileID: 21300000, guid: aeb5ae509124c6a4195df6c893a61b66, type: 3}
   mana: 0
-  cooldownSpawn: 5
+  cooldownSpawn: 6
   sight: 5
   atkRange: 1.25

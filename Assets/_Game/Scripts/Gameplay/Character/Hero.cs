@@ -7,38 +7,53 @@ using UnityEngine;
 public class Hero : Character
 {
     private int countWave = 0;
+    [SerializeField] LaurelWreath laurel;
+    private LaurelWreath currentLaurel;
+    public LaurelWreath CurrentLaurel => currentLaurel;
     public override void OnInit()
     {
         base.OnInit();
         SetOwnTown(EntitiesManager.Ins.CurrentCar);
+        //ResetCharacter();
     }
     public override void Update()
     {
         base.Update();
         if (GameManager.IsState(GameState.Gameplay))
-        {
-            if (!isDeath)
-            {
-                if (!EntitiesManager.Ins.CurrentBarrier.isDestroyed)
-                {
-                    if (!LevelManager.Ins.IsEndAllWave)
-                    {
-                        LevelManager.Ins.OnNextWave();
-                    }
-                }
-            }
-            if (EntitiesManager.Ins.CurrentBarrier.isDestroyed)
+        {         
+            if (EntitiesManager.Ins.CurrentBarrier == null)
             {
                 LevelManager.Ins.OnWin();
-                SetTarget(null);
-                SetTargetTower(null);
-            }    
-        }    
-            
+            }
+        }
     }
+
+    public void ResetCharacter()
+    {
+        if(currentLaurel != null)
+        {
+            Destroy(currentLaurel.gameObject);
+        }    
+    }
+    public void CreateLaurel()
+    {
+        if(currentLaurel != null)
+        {
+            Destroy(currentLaurel.gameObject);
+        }
+        currentLaurel = Instantiate(laurel, TF);
+    }    
     public override void OnDeath()
     {
         base.OnDeath();
+    }
+    private void BecomeZombie()
+    {
+        EntitiesManager.Ins.ChangeHeroToZombie();
+        OnDespawn();
+        //Vector3 yPos = CurrentModel.TF.position;
+        //yPos.y = -1;
+        //CurrentModel.TF.position = yPos;    
     }
     public override void OnDespawn()
     {
@@ -50,41 +65,37 @@ public class Hero : Character
     }
     public override void OnWalkEnter()
     {
-        destination = LevelManager.Ins.CurLevel.CurrentMap.TargetPosHero.position;
+        destination = LevelManager.Ins.CurrentMap.TargetPosHero.position;
         base.OnWalkEnter();
-        
+
     }
     public override void OnWalkExecute()
     {
         base.OnWalkExecute();
-        if(GameManager.IsState(GameState.Win))
-        {
-            ChangeRunState();
-        }    
+        
     }
     public override void OnAttackExecute()
-    {
+    {            
         base.OnAttackExecute();
-        if (GameManager.IsState(GameState.Win))
+        if (timer <= 0)
         {
-            ChangeRunState();
+            if (target == null || (target != null && target.isDeath))
+            {
+                ChangeWalkState();
+            }
         }
     }
     public override void OnRunEnter()
     {
-        //destination = EntitiesManager.Ins.CurrentCar.SpawnPosHero.position;
         if (GameManager.IsState(GameState.Win))
         {
-            SetMoveSpeed(MoveSpeed * 2);
-            agent.speed = MoveSpeed;
-            //TF.DORotate(new Vector3(0, 180, 0), 1.5f);
             destination = EntitiesManager.Ins.CurrentCar.SpawnPosHero.position;
-            CurrentModel.TF.DORotate(new Vector3(0, -90, 0), 1.5f);
-            SetDestination(destination);
-            //EntitiesManager.Ins.GoIntoCar(destination, this);
+            SetMoveSpeed(MoveSpeed * 3f);
+            agent.speed = MoveSpeed;          
+            CurrentModel.TF.DORotate(new Vector3(0, -90, 0), 1f);
         }
         base.OnRunEnter();
-        
+
     }
     public override void OnRunExecute()
     {
@@ -93,9 +104,15 @@ public class Hero : Character
         {
             if (isDestination)
             {
+                StopSetDestination();
                 OnDespawn();
             }
         }
 
+    }
+    public override void OnDeathEnter()
+    {
+        base.OnDeathEnter();
+        Invoke(nameof(BecomeZombie), 2.9f);
     }
 }

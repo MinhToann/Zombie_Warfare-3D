@@ -61,7 +61,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1628,7 +1628,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4087
 --- !u!114 &8122474608568571644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1641,6 +1641,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99a79d6e600921147a3c3b6ec271f672, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isDestroyOnClose: 0
+  animator: {fileID: 0}
+  icon: {fileID: 8166066408805642428, guid: 5c840cf45fd0ee24692cc5db50bd8bd6, type: 3}
+  managerSO: {fileID: 11400000, guid: b8b1a3a9209cae142ab521a067cf6384, type: 2}
+  parentIconCollection: {fileID: 3469956598350115323}
+  parentIconInDesk: {fileID: 4324564544176859381}
 --- !u!1001 &6376683133917240048
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1728,6 +1734,34 @@ PrefabInstance:
     - target: {fileID: 991436863450293520, guid: f7e7ef8a118e80a42ae00be24f28b316, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7155626026214036470, guid: f7e7ef8a118e80a42ae00be24f28b316, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7155626026214036470, guid: f7e7ef8a118e80a42ae00be24f28b316, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7155626026214036470, guid: f7e7ef8a118e80a42ae00be24f28b316, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 8122474608568571644}
+    - target: {fileID: 7155626026214036470, guid: f7e7ef8a118e80a42ae00be24f28b316, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7155626026214036470, guid: f7e7ef8a118e80a42ae00be24f28b316, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: CloseUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 7155626026214036470, guid: f7e7ef8a118e80a42ae00be24f28b316, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: CanvasManageTeam, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7155626026214036470, guid: f7e7ef8a118e80a42ae00be24f28b316, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 8814748948265548834, guid: f7e7ef8a118e80a42ae00be24f28b316, type: 3}
       propertyPath: m_Name

@@ -1,5 +1,67 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1750078744755352347
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2905306394575518885}
+  m_Layer: 9
+  m_Name: SpawnPosFire
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2905306394575518885
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1750078744755352347}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1023239061377972657}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3964747135754018817
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4610014434908217216}
+  m_Layer: 9
+  m_Name: BoomPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4610014434908217216
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3964747135754018817}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1023239061377972657}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4250255712583386577
 GameObject:
   m_ObjectHideFlags: 0
@@ -49,6 +111,9 @@ Transform:
   - {fileID: 371464082539106419}
   - {fileID: 1168790857282910165}
   - {fileID: 4994584980036045782}
+  - {fileID: 6007411496923220052}
+  - {fileID: 2905306394575518885}
+  - {fileID: 4610014434908217216}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &2317695273146660683
@@ -70,8 +135,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.8893168, y: 1.8768588, z: 9.893782}
-  m_Center: {x: -0.09113297, y: 0.43842942, z: 0.09471035}
+  m_Size: {x: 1.8893168, y: 2.9780664, z: 9.893782}
+  m_Center: {x: -0.091133, y: 0.9890332, z: 0.09471035}
 --- !u!114 &4805629891448425324
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -96,8 +161,49 @@ MonoBehaviour:
   cooldownSpawn: 0
   sight: 0
   atkRange: 0
+  effectOfWeapon: {fileID: 0}
   healthBar: {fileID: 346869020272266327}
   canvasHealth: {fileID: 7295782982170636408}
+  combatTextUI: {fileID: 3564661176201746242, guid: f16561ce99258624cb6bc450bc5c7cc2, type: 3}
+  smokeEffect: {fileID: 805964074656177831, guid: 00ab2e80fdb44eb42b1ddce1e282206d, type: 3}
+  fireEffect:
+  - {fileID: 3450886410490665720, guid: ef18248e99015d04fb09a7ef7586dc7e, type: 3}
+  - {fileID: 1637503025775570843, guid: fc04e9711d8475f4e9d8465c3fe15f3c, type: 3}
+  - {fileID: 4351850872425982016, guid: 8617b23b705d9da47b0ed756cdc9a0c0, type: 3}
+  spawnPosSmoke: {fileID: 6007411496923220052}
+  spawnPosFire: {fileID: 2905306394575518885}
+  boomEffect: {fileID: 2433282508523890284, guid: 3ef3ae421f71c5c4e97fe12dc2fc6312, type: 3}
+--- !u!1 &6821761322696203880
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6007411496923220052}
+  m_Layer: 9
+  m_Name: SpawnPosSmoke
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6007411496923220052
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6821761322696203880}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1023239061377972657}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &192825615042361240
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -146,6 +252,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 95faec538c11fc842a781bde04a59922, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c1b0ee828aa82b94ebd925cd2be4549d, type: 2}
     - target: {fileID: 919132149155446097, guid: 95faec538c11fc842a781bde04a59922, type: 3}
       propertyPath: m_Name
       value: debris-nut (3)
@@ -212,6 +322,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 95faec538c11fc842a781bde04a59922, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c1b0ee828aa82b94ebd925cd2be4549d, type: 2}
     - target: {fileID: 919132149155446097, guid: 95faec538c11fc842a781bde04a59922, type: 3}
       propertyPath: m_Name
       value: debris-nut (1)
@@ -278,6 +392,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 2725baf6d283fda4d987ff818eb41be1, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c1b0ee828aa82b94ebd925cd2be4549d, type: 2}
     - target: {fileID: 919132149155446097, guid: 2725baf6d283fda4d987ff818eb41be1, type: 3}
       propertyPath: m_Name
       value: debris-spoiler-b
@@ -344,6 +462,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 95faec538c11fc842a781bde04a59922, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c1b0ee828aa82b94ebd925cd2be4549d, type: 2}
     - target: {fileID: 919132149155446097, guid: 95faec538c11fc842a781bde04a59922, type: 3}
       propertyPath: m_Name
       value: debris-nut
@@ -410,6 +532,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 7dd46a8e145837549aef26a867731ac3, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c1b0ee828aa82b94ebd925cd2be4549d, type: 2}
     - target: {fileID: 919132149155446097, guid: 7dd46a8e145837549aef26a867731ac3, type: 3}
       propertyPath: m_Name
       value: cone
@@ -476,6 +602,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 664d897073dbec84f8e48fe74d2a6a96, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c1b0ee828aa82b94ebd925cd2be4549d, type: 2}
     - target: {fileID: 919132149155446097, guid: 664d897073dbec84f8e48fe74d2a6a96, type: 3}
       propertyPath: m_Name
       value: debris-plate-a
@@ -542,6 +672,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 95faec538c11fc842a781bde04a59922, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c1b0ee828aa82b94ebd925cd2be4549d, type: 2}
     - target: {fileID: 919132149155446097, guid: 95faec538c11fc842a781bde04a59922, type: 3}
       propertyPath: m_Name
       value: debris-nut (2)
@@ -608,6 +742,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 5b7236a2352666d4a809292420d44c08, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c1b0ee828aa82b94ebd925cd2be4549d, type: 2}
     - target: {fileID: 919132149155446097, guid: 5b7236a2352666d4a809292420d44c08, type: 3}
       propertyPath: m_Name
       value: debris-bolt (1)
@@ -674,6 +812,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 8c00aef5056258047bcc8dba4efbd794, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c1b0ee828aa82b94ebd925cd2be4549d, type: 2}
     - target: {fileID: 919132149155446097, guid: 8c00aef5056258047bcc8dba4efbd794, type: 3}
       propertyPath: m_Name
       value: debris-spoiler-a
@@ -740,6 +882,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 469f8e6aa6885f54087b7b7cfd14a166, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c1b0ee828aa82b94ebd925cd2be4549d, type: 2}
     - target: {fileID: 919132149155446097, guid: 469f8e6aa6885f54087b7b7cfd14a166, type: 3}
       propertyPath: m_Name
       value: debris-bumper
@@ -806,6 +952,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 1dc2aff3ea9a0b348bc0c74ad2f3c0cf, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c1b0ee828aa82b94ebd925cd2be4549d, type: 2}
     - target: {fileID: 919132149155446097, guid: 1dc2aff3ea9a0b348bc0c74ad2f3c0cf, type: 3}
       propertyPath: m_Name
       value: debris-tire (1)
@@ -872,6 +1022,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 1dc2aff3ea9a0b348bc0c74ad2f3c0cf, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c1b0ee828aa82b94ebd925cd2be4549d, type: 2}
     - target: {fileID: 919132149155446097, guid: 1dc2aff3ea9a0b348bc0c74ad2f3c0cf, type: 3}
       propertyPath: m_Name
       value: debris-tire
@@ -1094,6 +1248,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: fd3331f08e1df3743b457de71e029ea9, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c1b0ee828aa82b94ebd925cd2be4549d, type: 2}
     - target: {fileID: 919132149155446097, guid: fd3331f08e1df3743b457de71e029ea9, type: 3}
       propertyPath: m_Name
       value: cone-flat
@@ -1160,6 +1318,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 5b7236a2352666d4a809292420d44c08, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c1b0ee828aa82b94ebd925cd2be4549d, type: 2}
     - target: {fileID: 919132149155446097, guid: 5b7236a2352666d4a809292420d44c08, type: 3}
       propertyPath: m_Name
       value: debris-bolt
@@ -1226,6 +1388,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 2da9089ee5b71e849b1081e1656e9143, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c1b0ee828aa82b94ebd925cd2be4549d, type: 2}
     - target: {fileID: 919132149155446097, guid: 2da9089ee5b71e849b1081e1656e9143, type: 3}
       propertyPath: m_Name
       value: debris-door
@@ -1292,6 +1458,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 5cc4219150d9f6c4b88cfd64b82845b6, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c1b0ee828aa82b94ebd925cd2be4549d, type: 2}
     - target: {fileID: 919132149155446097, guid: 5cc4219150d9f6c4b88cfd64b82845b6, type: 3}
       propertyPath: m_Name
       value: box
@@ -1358,6 +1528,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -131.071
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 1dc2aff3ea9a0b348bc0c74ad2f3c0cf, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c1b0ee828aa82b94ebd925cd2be4549d, type: 2}
     - target: {fileID: 919132149155446097, guid: 1dc2aff3ea9a0b348bc0c74ad2f3c0cf, type: 3}
       propertyPath: m_Name
       value: debris-tire (2)

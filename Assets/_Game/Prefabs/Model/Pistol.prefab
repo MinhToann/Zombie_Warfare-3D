@@ -973,9 +973,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 8318263491942189741}
-  gameObjectType: 0
+  gameObjectType: 1
   spawnPosBullet: {fileID: 9127079930971708450}
   weaponInHand: {fileID: 1530710582686037775}
+  character: {fileID: 0}
 --- !u!4 &4345554321793421031 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2185512022143744475, guid: a8e9ac0a36f4ad4409c8660a42aece7d, type: 3}
@@ -1034,6 +1035,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4975090052635655661, guid: a03dae4db5073ff41891ca15ac15b7ad, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: d2bf1989178fe0c49a44e502a1b2447a, type: 2}
+    - target: {fileID: 4975090052635655661, guid: a03dae4db5073ff41891ca15ac15b7ad, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5ecb2e18ac319a347bdcd3e6952cc323, type: 2}
+    - target: {fileID: 4975090052635655661, guid: a03dae4db5073ff41891ca15ac15b7ad, type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: 431960b094824424bb03011cf66f1270, type: 2}
+    - target: {fileID: 4975090052635655661, guid: a03dae4db5073ff41891ca15ac15b7ad, type: 3}
+      propertyPath: m_Materials.Array.data[3]
+      value: 
+      objectReference: {fileID: -4660651839558579860, guid: 7741c36b4c4c3fb46a667fd05d94fe38, type: 3}
     - target: {fileID: 8850548424270415961, guid: a03dae4db5073ff41891ca15ac15b7ad, type: 3}
       propertyPath: m_Name
       value: Pistol

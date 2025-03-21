@@ -19,24 +19,41 @@ public class CanvasGameplay : UICanvas
     private float currentBlood;
     private float maxBlood;
     [SerializeField] Text bloodText;
+    private float waveTime;
+    public float WaveTime => waveTime;
+    private float timer;
+    public float Timer => timer;
     public override void Setup()
     {
         base.Setup();
         GameManager.ChangeState(GameState.Gameplay);
+        SaveLoadMapHandler.Ins.ClearMap();
+        LevelManager.Ins.OnLoadLevel(LevelManager.Ins.CurrentBuildingLevel.IdLevel - 1);
+        waveTime = LevelManager.Ins.CurrentWave.TimeInWave;
+        LevelManager.Ins.SetOriginalCameraOffset();
         CreateGameIcon();
-        SpawnWaveText();
-        currentMana = 50f;
+        
+        currentMana = 28f;
         maxMana = 100f;
         currentBlood = 0f;
         maxBlood = 100f;
-        //SetValueSliderMana(currentMana);
     }
     public override void Open()
     {
         base.Open();
+        EntitiesManager.Ins.OnInit();
+        SpawnWaveText();
+        Debug.Log("Wave time: " + waveTime);
     }
-    private void Update()
+    public override void Update()
     {
+        base.Update();
+        if (waveTime > 0)
+        {
+            waveTime -= Time.deltaTime;
+            timer = waveTime;
+        }    
+        
         SetValueSliderMana((int)currentMana);
         SetValueSliderBlood((int)currentBlood);
         if (currentMana < maxMana)
@@ -50,13 +67,18 @@ public class CanvasGameplay : UICanvas
     }
     private void CreateGameIcon()
     {
-        for(int i = 0; i < managerSO.ListCharacterSO.Count - 4; i++)
+        if(LevelManager.Ins.ListIcon.Count <= 0)
         {
-            GameplayIcon newIcon = Instantiate(icon, parentIcon);
-            managerSO.SetValueForIcon(newIcon, i);
-            newIcon.OnInit();
-            //newIcon.OnInit(i);
+            for (int i = 0; i < managerSO.ListCharacterSO.Count - 7; i++)
+            {
+                GameplayIcon newIcon = Instantiate(icon, parentIcon);
+                managerSO.SetValueForIcon(newIcon, i);
+                newIcon.OnInit();
+                LevelManager.Ins.AddIcon(newIcon);
+                
+            }
         }
+        
     }
     public void SpawnWaveText()
     {
@@ -65,9 +87,7 @@ public class CanvasGameplay : UICanvas
             Destroy(currentWaveText.gameObject);
         }
         currentWaveText = Instantiate(waveText, TF);
-        //
         currentWaveText.OnInit();
-        //currentWaveText.SetWaveText(LevelManager.Ins.CurLevel.CurrentNumberWave + 1);
     }
     public void MinusMana(int value)
     {
@@ -82,5 +102,9 @@ public class CanvasGameplay : UICanvas
     {
         sliderBlood.fillAmount = value / maxBlood;
         bloodText.text = value.ToString();
+    }    
+    public void SetWaveTime(float waveTime)
+    {
+        this.waveTime = waveTime;
     }    
 }

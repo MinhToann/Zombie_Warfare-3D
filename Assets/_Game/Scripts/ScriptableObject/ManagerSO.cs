@@ -6,7 +6,6 @@ using UnityEngine;
 public class ManagerSO : ScriptableObject
 {
     [SerializeField] private List<CharacterSO> listCharacterSO = new List<CharacterSO> ();
-    [SerializeField] private List<Character> listCharacter = new List<Character> ();
     [SerializeField] private List<Tower> listTower = new List<Tower> ();
     [SerializeField] private List<CharacterModel> listModel = new List<CharacterModel> ();
     [SerializeField] private List<WeaponSO> listWeaponInfo = new List<WeaponSO> ();
@@ -14,21 +13,39 @@ public class ManagerSO : ScriptableObject
     [SerializeField] private List<Bullet> listBullet = new List<Bullet> ();
     [SerializeField] private List<BulletModel> listBulletModel = new List<BulletModel> ();
     [SerializeField] private List<AnimatorOverrideSO> listAnimatorOverride = new List<AnimatorOverrideSO> ();
+    [SerializeField] private List<MapSO> listMapDataSO = new List<MapSO> ();
+    [SerializeField] private List<Grid> listGridMap = new List<Grid>();
+    [SerializeField] private List<GridObjectOnMap> listBuildingLevel = new List<GridObjectOnMap> ();
+    [SerializeField] private List<LevelSO> listLevelSO = new List<LevelSO>();
+    [SerializeField] private List<VFXSO> listEffect = new List<VFXSO> ();
     public List<CharacterSO> ListCharacterSO => listCharacterSO;
-    public List<Character> ListCharacter => listCharacter;
     public List<Tower> ListTower => listTower;
     public List<CharacterModel> ListModel => listModel;
     public List<WeaponSO> ListWeaponInfo => listWeaponInfo;
     public List<BulletSO> ListBulletSO => listBulletInfo;
-
+    public List<MapSO> ListMapDataSO => listMapDataSO;
+    public List<Grid> ListGridMap => listGridMap;
+    public List<GridObjectOnMap> ListBuildingLevel => listBuildingLevel;
+    public List<LevelSO> ListLevelSO => listLevelSO;
+    public List<VFXSO> ListEffect => listEffect;
     public void SetValueForCharacter(Character character, int index)
     {
         character.SetPoolType(listCharacterSO[index].PoolTypeObject);
         character.SetGameObjectType(listCharacterSO[index].GOType);
-        character.SetHP(listCharacterSO[index].HP);
-        character.SetDamage(listCharacterSO[index].Damage);
-        character.SetMoveSpeed(listCharacterSO[index].MoveSpeed);
-        character.SetAtkSpeed(listCharacterSO[index].AtkSpeed);
+        if (PlayerData.Ins.data.DicDataPlayer.ContainsKey(listCharacterSO[index].GOType))
+        {
+            character.SetHP(listCharacterSO[index].HP + PlayerData.Ins.data.DicDataPlayer[listCharacterSO[index].GOType].HPBonus);
+            character.SetDamage(listCharacterSO[index].Damage + PlayerData.Ins.data.DicDataPlayer[listCharacterSO[index].GOType].DamageBonus);
+            character.SetMoveSpeed(listCharacterSO[index].MoveSpeed + PlayerData.Ins.data.DicDataPlayer[listCharacterSO[index].GOType].MoveSpeedBonus);
+            character.SetAtkSpeed(listCharacterSO[index].AtkSpeed + PlayerData.Ins.data.DicDataPlayer[listCharacterSO[index].GOType].AttackSpeedBonus);
+        }
+        else
+        {
+            character.SetHP(listCharacterSO[index].HP);
+            character.SetDamage(listCharacterSO[index].Damage);
+            character.SetMoveSpeed(listCharacterSO[index].MoveSpeed);
+            character.SetAtkSpeed(listCharacterSO[index].AtkSpeed);
+        }
         character.SetName(listCharacterSO[index].NameInfo);
         character.SetMana(listCharacterSO[index].Mana);
         character.SetCooldownSpawn(listCharacterSO[index].CooldownSpawn);
@@ -60,6 +77,7 @@ public class ManagerSO : ScriptableObject
     public void SetValueForWeapon(WeaponBase weapon, int index)
     {
         weapon.SetDamage(listWeaponInfo[index].Damage);
+        //weapon.SetEffectForWeapon(listWeaponInfo[index].EffectOfWeapon);
     }
     public void SetValueForBullet(Bullet bullet, int index)
     {
@@ -114,6 +132,18 @@ public class ManagerSO : ScriptableObject
         }
         return model;
     }
+    public Grid SpawnGridObject(MapObjectType mapObjectType)
+    {
+        Grid grid = new Grid();
+        for(int i = 0; i < listGridMap.Count; i++)
+        {
+            if (listGridMap[i].MapObjectOnGroundType == mapObjectType)
+            {
+                grid = listGridMap[i];
+            }    
+        }
+        return grid;
+    }    
     public void SetAnimatorCharacter(GameObjectType characterType, CharacterModel model)
     {
         for(int i = 0; i < listAnimatorOverride.Count; i++)
@@ -124,4 +154,29 @@ public class ManagerSO : ScriptableObject
             }
         }
     }
+    public void SetValueForMapObject()
+    {
+        for(int i = 0; i < listMapDataSO.Count; i++)
+        {
+            listMapDataSO[i].SetValueForGrid(listGridMap[i]);
+        }    
+    }    
+    public void SetValueForBuildingLevel()
+    {
+        for(int i = 0; i < listLevelSO.Count; i++)
+        {
+            listLevelSO[i].SetValueBuilding(listBuildingLevel[i]);
+        }    
+    }    
+    public void SetVFXCharacter(Character character)
+    {
+        for(int i = 0; i < listEffect.Count; i++)
+        {
+            if(character.GOType == listEffect[i].GOType)
+            {
+                character.CurrentModel.CurrentWeapon.SetEffectForWeapon(listEffect[i].Effect);
+            }    
+        }    
+    }
+
 }

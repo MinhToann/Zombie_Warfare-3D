@@ -5,8 +5,7 @@ using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
-    private static GameState gameState;
-
+    [SerializeField] private static GameState gameState;
     public static void ChangeState(GameState state)
     {
         gameState = state;
@@ -16,6 +15,7 @@ public class GameManager : Singleton<GameManager>
 
     private void Awake()
     {
+        //DontDestroyOnLoad(gameObject);
         //tranh viec nguoi choi cham da diem vao man hinh
         Input.multiTouchEnabled = false;
         //target frame rate ve 60 fps
@@ -32,8 +32,4 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    private void Start()
-    {
-        UIManager.Ins.OpenUI<CanvasGameplay>();
-    }
 }

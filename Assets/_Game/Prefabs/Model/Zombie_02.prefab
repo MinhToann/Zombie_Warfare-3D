@@ -1055,3 +1055,5 @@ MonoBehaviour:
   gameObjectType: 51
   spawnPosBullet: {fileID: 0}
   weaponInHand: {fileID: 1224695438306807784}
+  character: {fileID: 0}
+  canvasHealth: {fileID: 2983535002314820516, guid: 5956fbb7fe7903341b536391f5de9216, type: 3}

@@ -113,6 +113,7 @@ MonoBehaviour:
   cooldownSpawn: 0
   sight: 0
   atkRange: 0
+  effectOfWeapon: {fileID: 3563921326154844316, guid: d8c356495af60f145b3d196b64278007, type: 3}
 --- !u!65 &2199979668998922364
 BoxCollider:
   m_ObjectHideFlags: 0

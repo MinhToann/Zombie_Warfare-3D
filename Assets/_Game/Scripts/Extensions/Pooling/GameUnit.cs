@@ -31,6 +31,7 @@ public class GameUnit : MonoBehaviour
     [SerializeField] private float cooldownSpawn;
     [SerializeField] private float sight;
     [SerializeField] private float atkRange;
+    [SerializeField] ParticleSystem effectOfWeapon;
     public PoolType PoolTypeObject => poolType;
     public GameObjectType GOType => gameObjectType;
     public float HP => hp;
@@ -43,6 +44,7 @@ public class GameUnit : MonoBehaviour
     public float CooldownSpawn => cooldownSpawn;
     public float Sight => sight;
     public float AttackRange => atkRange;
+    public ParticleSystem EffectWeapon => effectOfWeapon;
     public void SetPoolType(PoolType poolType)
     {
         this.poolType = poolType;
@@ -90,5 +92,9 @@ public class GameUnit : MonoBehaviour
     public void SetAtkRange(float atkRange)
     {
         this.atkRange = atkRange;
+    }    
+    public void SetEffectForWeapon(ParticleSystem effect)
+    {
+        effectOfWeapon = effect;
     }    
 }

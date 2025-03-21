@@ -8,17 +8,6 @@ public class Bullet : GameUnit
     private Character owner;
     [SerializeField] BulletModel currentModel;
     public BulletModel CurrentModel => currentModel;
-    public void OnInit()
-    {
-        //for(int i = 0; i < managerSO.ListBulletSO.Count; i++)
-        //{
-        //    if(GOType == managerSO.ListBulletSO[i].GOType)
-        //    {
-        //        managerSO.SetValueForBullet(this, i);
-        //    }    
-            
-        //}
-    }
     public void ChangeModel(GameObjectType modelType)
     {
         if (currentModel != null)
@@ -33,7 +22,6 @@ public class Bullet : GameUnit
                 managerSO.SetValueForBulletModel(currentModel, i);
             }
         }
-        //managerSO.SetValueForBulletModel(characterType);
         currentModel.OnInit();
     }
     public void SetOwner(Character owner)
@@ -43,18 +31,19 @@ public class Bullet : GameUnit
     private void OnDespawn()
     {
         SimplePool.Despawn(this);
-    }    
+    }
     private void Update()
     {
-        if(owner.Target != null && !owner.Target.isDeath)
+        TF.position += TF.right * MoveSpeed * Time.deltaTime;
+        if ((owner.Target != null && !owner.Target.isDeath))
         {
             TF.position = Vector3.MoveTowards(TF.position, owner.Target.TF.position, MoveSpeed * Time.deltaTime);
         }
-        else
-        {
-            TF.position += TF.right * MoveSpeed * Time.deltaTime;
-        }
-        
+        //if ((owner.TowerTarget != null && !owner.TowerTarget.isDestroyedd))
+        //{
+        //    //TF.position = Vector3.MoveTowards(TF.position, owner.TowerTarget.TF.position, MoveSpeed * Time.deltaTime);
+        //    TF.position = TF.right * MoveSpeed * Time.deltaTime;
+        //}
     }
     private void CollideWithCharacter(Character character)
     {
@@ -62,42 +51,26 @@ public class Bullet : GameUnit
         {
             if (character != owner && character.PoolTypeObject != owner.PoolTypeObject && !character.isDeath)
             {
-                if (owner.IsAttack)
-                {
-                    character.OnHit(Damage + owner.Damage);
-                    owner.SetBoolAttack(false);
-                }
+                character.OnHit(Damage + owner.Damage);
+                owner.SetBoolAttack(false);
                 OnDespawn();
             }
 
         }
-        //if(character)
-        //{
-        //    if (owner.IsAttack)
-        //    {
-        //        character.OnHit(Damage + owner.Damage);
-        //        owner.SetBoolAttack(false);
-        //    }
-        //    OnDespawn();
-        //}    
-    }    
+    }
     private void CollideWithTower(Tower tower)
     {
-        if (tower != null && !tower.isDestroyed)
+        if (tower != null && !tower.isDestroyedd && tower != owner.OwnTown)
         {
-            if (owner.IsAttack)
+            if (!owner.isDeath)
             {
-                if (!owner.isDeath)
-                {
-                    tower.OnHit(Damage + owner.Damage);
-                    owner.SetBoolAttack(false);
+                tower.OnHit(Damage + owner.Damage);
+                owner.SetBoolAttack(false);
 
-                }
-                
             }
             OnDespawn();
         }
-    }    
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (Cache.CollideWithCharacter(other))
@@ -108,6 +81,6 @@ public class Bullet : GameUnit
         {
             CollideWithTower(Cache.CollideWithTower(other));
         }
-        
+
     }
 }

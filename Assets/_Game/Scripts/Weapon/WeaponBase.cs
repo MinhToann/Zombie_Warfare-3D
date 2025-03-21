@@ -6,6 +6,7 @@ using UnityEngine.TextCore.Text;
 
 public class WeaponBase : GameUnit
 {
+    
     private Character owner;
     public Character Owner => owner;
     private bool isAttack;
@@ -18,7 +19,6 @@ public class WeaponBase : GameUnit
             if(GOType == managerSO.ListWeaponInfo[i].GOType)
             {
                 managerSO.SetValueForWeapon(this, i);
-                //SetOwner(owner);
             }    
         }    
         
@@ -32,6 +32,7 @@ public class WeaponBase : GameUnit
         
         Bullet bullet = SimplePool.Spawn<Bullet>(PoolType.Bullet, owner.CurrentModel.SpawnPosBullet.position, owner.TF.rotation);
         bullet.ChangeModel(this.GOType);
+        ParticlePool.Play(EffectWeapon, owner.CurrentModel.SpawnPosBullet.position, Quaternion.identity);
         for (int i = 0; i < managerSO.ListBulletSO.Count; i++)
         {
             if (bullet.CurrentModel.GOType == managerSO.ListBulletSO[i].GOType)
@@ -40,7 +41,6 @@ public class WeaponBase : GameUnit
             }
         }
         bullet.SetOwner(owner);
-        //bullet.OnInit();
     }    
     public void SetOwner(Character owner)
     {
@@ -66,26 +66,17 @@ public class WeaponBase : GameUnit
         {
             if (character != owner && character.PoolTypeObject != owner.PoolTypeObject && !character.isDeath)
             {
-                //DelayTakeDame(character);
-                if (!owner.isDeath && owner.IsAttack)
+                if (!owner.isDeath)
                 {
-                    //StartCoroutine(DelayTakeDame(character));
                     character.OnHit(Damage + owner.Damage);
                     owner.SetBoolAttack(false);
                 }
             }
-
         }
-        //if (!owner.isDeath && owner.IsAttack)
-        //{
-        //    //StartCoroutine(DelayTakeDame(character));
-        //    character.OnHit(Damage + owner.Damage);
-        //    owner.SetBoolAttack(false);
-        //}
     }
     public void CollideWithTower(Tower tower)
     {
-        if (tower != null && owner.IsAttack && !tower.isDestroyed)
+        if (tower != null && !tower.isDestroyedd)
         {
             tower.OnHit(Damage + owner.Damage);
             owner.SetBoolAttack(false);
@@ -101,18 +92,4 @@ public class WeaponBase : GameUnit
             }    
         }    
     }
-    //public void OnTriggerEnter(Collider other)
-    //{
-    //    //isAttack = true; 
-    //    if (Cache.CollideWithCharacter(other))
-    //    {
-    //        CollideWithCharacter(Cache.CollideWithCharacter(other));
-    //        //StartCoroutine(DelayTakeDame(Cache.CollideWithCharacter(other)));
-    //    }
-    //    if (Cache.CollideWithTower(other))
-    //    {
-    //        CollideWithTower(Cache.CollideWithTower(other));
-    //    }
-
-    //}
 }

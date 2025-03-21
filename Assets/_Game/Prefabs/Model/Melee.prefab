@@ -980,6 +980,7 @@ MonoBehaviour:
   gameObjectType: 0
   spawnPosBullet: {fileID: 0}
   weaponInHand: {fileID: 3718280401835406885}
+  character: {fileID: 0}
 --- !u!4 &1167833341482872393 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2185512022143744475, guid: a8e9ac0a36f4ad4409c8660a42aece7d, type: 3}
@@ -1002,6 +1003,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shield
       objectReference: {fileID: 0}
+    - target: {fileID: 4388572006514491154, guid: c93118433b8592049ad3156071a0f77e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 43714b68324cc2c409d534d9874f2a2b, type: 2}
+    - target: {fileID: 4388572006514491154, guid: c93118433b8592049ad3156071a0f77e, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: -3963241562183589234, guid: 8ce444e597a27934b9f78f3a3c04d68c, type: 3}
+    - target: {fileID: 4388572006514491154, guid: c93118433b8592049ad3156071a0f77e, type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: 431960b094824424bb03011cf66f1270, type: 2}
+    - target: {fileID: 4388572006514491154, guid: c93118433b8592049ad3156071a0f77e, type: 3}
+      propertyPath: m_Materials.Array.data[3]
+      value: 
+      objectReference: {fileID: 4875329586141879171, guid: 3315bf8c6ce20ca43aa8b08a6f120c28, type: 3}
     - target: {fileID: 5877383357269148447, guid: c93118433b8592049ad3156071a0f77e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.00005

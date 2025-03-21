@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   poolType: 4
   gameObjectType: 123
+  effectOfWeapon: {fileID: 4351796516803040711, guid: 2a2914b78ee44e9488da181df375b357, type: 3}
   damage: 9
   atkSpeed: 2

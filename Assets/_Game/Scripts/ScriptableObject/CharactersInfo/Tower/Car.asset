@@ -15,12 +15,12 @@ MonoBehaviour:
   poolType: 2
   gameObjectType: 100
   hp: 100
-  damage: 15
+  damage: 500
   moveSpeed: 4
-  atkSpeed: 10
+  atkSpeed: 0
   nameInfo: SUV
   icon: {fileID: 0}
   mana: 0
   cooldownSpawn: 0
-  sight: 20
-  atkRange: 15
+  sight: 7
+  atkRange: 0

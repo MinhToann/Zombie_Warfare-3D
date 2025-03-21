@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2eca734bc98cf84186d0b2f3097b250, type: 3}
   m_Name: Wave_03
   m_EditorClassIdentifier: 
-  waveTime: 16
+  waveTime: 30
   quantityZombieInWave: 2
+  hasBoss: 1

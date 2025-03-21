@@ -16,11 +16,11 @@ MonoBehaviour:
   gameObjectType: 2
   hp: 18
   damage: 2
-  moveSpeed: 1
-  atkSpeed: 2
+  moveSpeed: 1.1
+  atkSpeed: 1.8
   nameInfo: Riffle Hero
   icon: {fileID: 21300000, guid: cb2c670f343e77d4398b8ca4ccbef69c, type: 3}
   mana: 30
   cooldownSpawn: 15
   sight: 6
-  atkRange: 4
+  atkRange: 4.5

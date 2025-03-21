@@ -5,12 +5,12 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
-using UnityEditor.UIElements;
 using System;
+
 public class Character : GameUnit
 {
     private string currentAnim;
-    [SerializeField] Animator anim;
+    [SerializeField] protected Animator anim;
     [SerializeField] CharacterModel model;
     [SerializeField] CharacterModel currentModel;
     public CharacterModel CurrentModel => currentModel;
@@ -35,27 +35,32 @@ public class Character : GameUnit
     [SerializeField] WeaponBase currentWeapon;
     private bool isAttack;
     public bool IsAttack => isAttack;
-    float cooldownAttack;
+    protected float cooldownAttack;
     public float CoolDownAttack => cooldownAttack;
-    float timer = 0;
+    protected float delayWalk;
+    protected float timer = 0;
     [SerializeField] Collider chaCollider;
     public Collider CharacterCollider => chaCollider;
     RaycastHit hit;
     [SerializeField] Transform shootRay;
     [SerializeField] protected Tower ownTown;
+    public Tower OwnTown => ownTown;
     private bool isTakeDamage;
     public bool IsTakeDamage => isTakeDamage;
     [SerializeField] CanvasHealthBar canvasHealth;
-    [SerializeField] List<AnimatorOverrideController> listAnimatorOverride = new List<AnimatorOverrideController>();
-    private void Start()
-    {
-        //OnInit();
-    }
+    private CanvasHealthBar currentHealthBar;
+    private float normalMS;
+    public float NormalMS => normalMS;
+    float timerStandup = 7f;
+    float timeMinus;
+    [SerializeField] Blood blood;
+    private Blood chaBlood;
+    [SerializeField] UICombatText combatTextUI;
+    [SerializeField] Transform laydownPos;
+    private float deadTimer;
+
     public virtual void OnInit()
     {
-        //managerSO.SetValueModel();
-        //anim = model.Anim;
-        //healthBar.rectTransform.rect.width = maxHealth * healthBarWidth;
         if (currentWeapon != null)
         {
             currentWeapon.OnInit(this);
@@ -68,18 +73,35 @@ public class Character : GameUnit
             {
                 cooldownAttack = clips[i].length / AtkSpeed;
             }
+            if (clips[i].name.Contains("Walk") || clips[i].name.Contains("Run"))
+            {
+                delayWalk = clips[i].length / MoveSpeed;
+            }    
         }
-        canvasHealth.gameObject.SetActive(false);
+        anim.SetFloat(Constant.ATTACK_SPEED, AtkSpeed);
+        anim.SetFloat(Constant.MOVE_SPEED, MoveSpeed);
+        //canvasHealth.gameObject.SetActive(false);
+        InitHealthBar();
         isTakeDamage = false;
         target = null;
         towerTarget = null;
         isAttack = false;
         health = maxHealth = HP;
         healthBar.fillAmount = health / maxHealth;
-        agent.speed = MoveSpeed;
-        ChangeState(Constant.WALK_STATE);
+        normalMS = MoveSpeed;
+        //agent.speed = MoveSpeed;
+        ChangeWalkState();
 
     }
+    public void InitHealthBar()
+    {
+        if(currentHealthBar != null)
+        {
+            Destroy(currentHealthBar.gameObject);
+        }
+        currentHealthBar = Instantiate(canvasHealth, TF);
+        currentHealthBar.gameObject.SetActive(false);
+    }    
     public virtual void SetDirection(Vector3 tf)
     {
         TF.forward = tf;
@@ -90,6 +112,7 @@ public class Character : GameUnit
         if(!isDeath)
         {
             TF.rotation = Quaternion.identity;
+            agent.speed = MoveSpeed;
             if (state != null)
             {
                 state.OnExecute(this);
@@ -97,71 +120,110 @@ public class Character : GameUnit
         }    
         if (GameManager.IsState(GameState.Gameplay))
         {
-            
+            if (EntitiesManager.Ins.CurrentBarrier != null)
+            {
+                if (!LevelManager.Ins.IsEndAllWave)
+                {
+                    LevelManager.Ins.OnNextWave();
+                }
+            }
             if (target != null)
             {
                 if (target.isDeath)
                 {
-                    //RemoveTarget(target);
                     target = null;
                 }
             }
+            if(towerTarget != null)
+            {
+                if(towerTarget.isDestroyedd)
+                {
+                    towerTarget = null;
+                }    
+            }    
             if (!isDeath)
             {
-                //if(!isTakeDamage)
+                //if (target == null && towerTarget == null)
                 //{
-                //    DelayTurnOffHealthBar(Time.deltaTime);
-                //}    
-                
+                //    DelayChangeWalkState();
+                //}
                 if (towerTarget == null)
                 {
                     if (target == null)
                     {
                         RaycastHit[] hit = new RaycastHit[10];
-                        RaycastHit[] hitTower = new RaycastHit[2];
+
                         int numberCharacter = Physics.SphereCastNonAlloc(TF.position, Sight, TF.right, hit, Sight, layerMask, QueryTriggerInteraction.UseGlobal);
-                        int numberTower = Physics.SphereCastNonAlloc(TF.position, AttackRange, TF.right, hitTower, AttackRange, towerMask, QueryTriggerInteraction.UseGlobal);
+
                         for (int i = 0; i < numberCharacter; i++)
                         {
 
                             Character cha = hit[i].transform.gameObject.GetComponent<Character>();
                             if (cha != null && !cha.isDeath && cha.PoolTypeObject != PoolTypeObject)
                             {
-                                if (Vector3.Distance(TF.position, cha.TF.position) <= this.Sight)
+                                bool isFacingEachOther =
+                    (TF.position.x < cha.TF.position.x && PoolTypeObject == PoolType.Heroes) ||
+                    (TF.position.x > cha.TF.position.x && PoolTypeObject == PoolType.Zombies);
+                                if (isFacingEachOther && Vector3.Distance(TF.position, cha.TF.position) <= this.Sight)
                                 {
                                     SetTarget(cha);
                                 }
                             }
 
                         }
+
+                    }
+                    else
+                    {
+                        towerTarget = null;
+                        if (Vector3.Distance(TF.position, target.TF.position) <= this.Sight)
+                        {
+                            if(timer <= 0)
+                            {
+                                Vector3 newDestination = target.TF.position;
+                                //newDestination.x += Target.TF.forward.x - 0.5f;
+                                newDestination.z = target.TF.position.z;
+                                SetDestination(newDestination);
+                            }    
+                            
+                        }
+                        bool noLongerFacingEachOther =
+            (TF.position.x > target.TF.position.x && PoolTypeObject == PoolType.Heroes) ||
+            (TF.position.x < target.TF.position.x && PoolTypeObject == PoolType.Zombies);
+
+                        // Clear target if no longer facing or out of sight range
+                        if (noLongerFacingEachOther)
+                        {
+                            target = null;
+                        }
+                    }
+                }    
+                
+                if(target == null)
+                {
+                    if (towerTarget == null)
+                    {
+                        RaycastHit[] hitTower = new RaycastHit[2];
+                        int numberTower = Physics.SphereCastNonAlloc(TF.position, AttackRange, TF.right, hitTower, AttackRange, towerMask, QueryTriggerInteraction.UseGlobal);
                         for (int i = 0; i < numberTower; i++)
                         {
                             Tower tower = hitTower[i].transform.gameObject.GetComponent<Tower>();
-                            if(tower != null && tower != ownTown)
+                            if (tower != null && tower != ownTown)
                             {
-                                if(Vector3.Distance(TF.position, tower.TF.position) <= this.Sight)
+                                if (Vector3.Distance(TF.position, tower.TF.position) < this.Sight)
                                 {
                                     SetTargetTower(tower);
-                                }    
-                            }    
-                           
+                                }
+                            }
+
                         }
                     }
                     else
                     {
-                        if (Vector3.Distance(TF.position, target.TF.position) > AttackRange)
-                        {
-                            Vector3 newDestination = target.TF.position;
-                            //newDestination.x += Target.TF.forward.x - 0.5f;
-                            newDestination.z = target.TF.position.z;
-                            SetDestination(newDestination);
-                        }
+                        target = null;
                     }
-                }
-                else
-                {
-                    target = null;
-                }
+                }    
+                
             }
         }
     }
@@ -178,17 +240,8 @@ public class Character : GameUnit
     public virtual void OnDeath()
     {
         ChangeState(Constant.DEATH_STATE);
-        Invoke(nameof(SetPosCurrentModel), 0.5f);
-        //EntitiesManager.Ins.RemoveDeathCharacter(this);
-        //currentModel.TF.position = onGround;
-
+        //Invoke(nameof(SetPosCurrentModel), 0.5f);
     }
-    private void SetPosCurrentModel()
-    {
-        Vector3 onGround = currentModel.TF.position;
-        onGround.y = -0.55f;
-        currentModel.TF.DOMoveY(onGround.y, 2.5f);
-    }    
     public virtual void OnDespawn()
     {        
         EntitiesManager.Ins.OnDeathCharacter(this);
@@ -216,36 +269,86 @@ public class Character : GameUnit
     {
         ownTown = tower;
     }
+    public virtual void OnIdleEnter()
+    {
+        StopSetDestination();
+        ChangeAnim(Constant.ANIM_IDLE);
+    }   
+    public virtual void OnIdleExecute()
+    {
+       
+    }
     public virtual void OnWalkEnter()
     {
         isAttack = false;
-        if (listTarget.Count <= 0)
+        if (!isDestination || target == null || towerTarget == null)
         {
             SetDestination(destination); //override destination o cac class child
             ChangeAnim(Constant.ANIM_WALK);
         }
-
+         
     }    
     public virtual void OnWalkExecute()
     {
         if (isDestination || (target != null && Vector3.Distance(TF.position, target.TF.position) <= AttackRange) || (towerTarget != null && Vector3.Distance(TF.position, towerTarget.TF.position) <= AttackRange))
         {
+            
             ChangeState(Constant.ATK_STATE);
         }
     }
 
     public virtual void OnRunEnter()
     {
-        SetDestination(destination);
-        ChangeAnim(Constant.ANIM_RUN);
+        if (!isDestination || target == null || towerTarget == null)
+        {
+            SetDestination(destination);
+            ChangeAnim(Constant.ANIM_RUN);
+        }
+        
     }
     public virtual void OnRunExecute()
     {
-        if (isDestination)
+        if(GameManager.IsState(GameState.Gameplay))
         {
-            StopSetDestination();
-        }    
+            if (isDestination || (target != null && Vector3.Distance(TF.position, target.TF.position) <= AttackRange) || (towerTarget != null && Vector3.Distance(TF.position, towerTarget.TF.position) <= AttackRange))
+            {
+                ChangeState(Constant.ATK_STATE);
+            }
+        }
     }
+    public virtual void OnStandUpEnter()
+    { 
+        ChangeAnim(Constant.ANIM_STANDUP);
+        
+        //Invoke(nameof(SetNormalStateForZombie), timerStandup);
+    }   
+    public void SetNormalStateForZombie()
+    {
+        CurrentModel.RotateModel(-90, 0.75f);
+        OnInit();
+        
+    }
+    public void KneelRotate()
+    {
+        CurrentModel.RotateModel(-90, 0.75f);
+        destination = EntitiesManager.Ins.CurrentCar.SpawnPosCarHero.position;
+        if (!isDestination)
+        {
+            SetDestination(destination); //override destination o cac class child
+            ChangeAnim(Constant.ANIM_WALK);
+        }
+        else
+        {
+            SimplePool.Despawn(this);
+        }    
+    }    
+    public virtual void OnStandUpExecute()
+    {
+        if (timerStandup > 0)
+        {
+            timerStandup -= Time.deltaTime;
+        }    
+    }    
     private void SetNewTarget()
     {
         float minDistance = GetDistanceClosetTarget();
@@ -272,13 +375,6 @@ public class Character : GameUnit
                 if (min > Vector3.Distance(TF.position, listTarget[i].TF.position))
                 {
                     min = Vector3.Distance(TF.position, listTarget[i].TF.position);
-                    //Vector3 targetPos = listTarget[i].TF.position;
-                    //SetDestination(targetPos);
-                    //if (isDestination || Vector3.Distance(TF.position, targetPos) < Sight / 2 && (Mathf.Abs(TF.position.z - targetPos.z) < 0.1f))
-                    //{
-                    //    StopSetDestination();
-                    //    //ChangeState(Constant.ATK_STATE);
-                    //}
                 }
             }
             return min;
@@ -298,103 +394,122 @@ public class Character : GameUnit
         if(GameManager.IsState(GameState.Gameplay))
         {
             StopSetDestination();
-            if (timer <= 0)
-            {
-                Invoke(nameof(Attack), 0.1f);
-                anim.SetFloat(Constant.ATTACK_SPEED, AtkSpeed);
-                ChangeAnimAttack();
-                timer = cooldownAttack;
-            }
+            isAttack = true;
+            //timer = 0;
+            timer = cooldownAttack;
+            ChangeAnimAttack();
         }    
          
     }
     public virtual void OnAttackExecute()
     {
+          
+        if (timer > 0)
+        {
+            timer -= Time.deltaTime;
+        }
+        else
+        {
+            if (target == null || (target != null && target.isDeath))
+            {
+                ChangeWalkState();
+            }
+        }
         if (towerTarget != null)
         {
-            if (timer > 0)
+            if(timer <= 0)
             {
-                timer -= Time.deltaTime;
-                //isAttack = false;
-            }
-            else
-            {
-                if (!towerTarget.isDestroyed)
+                if (Vector3.Distance(TF.position, towerTarget.TF.position) <= AttackRange)
                 {
-                    OnAttackEnter();
-                }
+                    if (!towerTarget.isDestroyedd)
+                    {
+                        OnAttackEnter();
+                    }
+                }                
             }
         }
         if (target != null)
         {
-            if (timer > 0)
+            if (Vector3.Distance(TF.position, target.TF.position) > Sight)
             {
-                timer -= Time.deltaTime;
-                //isAttack = false;
+                target = null;
             }
-            else
+            if (timer <= 0)
             {
-                if (!target.isDeath)
+                if (Vector3.Distance(TF.position, target.TF.position) <= AttackRange)
                 {
-                    OnAttackEnter();
-                }
+                    if (!target.isDeath)
+                    {
+                        OnAttackEnter();
+                    }  
+                }      
                 else
                 {
-                    DelayChangeWalkState();
-                }
+                    ChangeWalkState();
+                }    
             }
         }
-
-        else if(target == null && towerTarget == null)
-        {
-            DelayChangeWalkState();
-        }
     }
-    private void DelayChangeWalkState()
-    {
-        Invoke(nameof(ChangeWalkState), cooldownAttack - cooldownAttack / 3);
-    }
+    
     public void SetTargetTower(Tower tower)
     {
         towerTarget = tower;
     }
-    private void ChangeWalkState()
+    public void ChangeWalkState()
     {
         ChangeState(Constant.WALK_STATE);
     }
     public virtual void OnDeathEnter()
     {
-        Debug.Log("Death enter");
         StopSetDestination();
-        SetTarget(null);
-        ChangeAnim(Constant.ANIM_DEATH);        
-        Invoke(nameof(OnDespawn), 3f);
-        
+        ChangeAnim(Constant.ANIM_DEATH);
     }
     public virtual void OnDeathExecute()
     {
 
     }
-    public virtual void OnStandUpEnter()
+    public virtual void OnFlyingBackDeathEnter()
+    {
+        StopSetDestination();
+        ChangeAnim(Constant.ANIM_FLYING_BACK);
+    }    
+    public virtual void OnFlyingBackDeathExecute()
     {
 
-    }
-    public virtual void OnStandUpExecute()
-    {
-
-    }
+    }    
     public void OnHit(float damage)
     {
         isTakeDamage = true;
-        canvasHealth.gameObject.SetActive(true);
+        currentHealthBar.gameObject.SetActive(true);
         health -= damage;
-        healthBar.fillAmount = health / maxHealth;
+        currentHealthBar.HealthImg.fillAmount = health / maxHealth;
+        EntitiesManager.Ins.CreateBloodEffect(TF.position);
+        SpawnCombatText(TF.position, $"-{damage}", Color.red);
         Invoke(nameof(SetBoolTakeDamage), 1f);
+        BloodOnHit();
         if (isDeath)
         {
             isTakeDamage = false;
             OnDeath();
         }
+    }
+    private void BloodOnHit()
+    {
+        if(chaBlood == null)
+        {
+            chaBlood = Instantiate(blood, TF);
+            chaBlood.transform.localPosition = Vector3.zero;
+            //chaBlood.TF.DOMove(-TF.forward, 0.085f);
+        }
+        else
+        {
+            Invoke(nameof(DespawnBlood), 0.15f);
+        }
+
+    }
+    private void DespawnBlood()
+    {
+        Destroy(chaBlood.gameObject);
     }
     private void SetBoolTakeDamage()
     {
@@ -405,7 +520,7 @@ public class Character : GameUnit
     {
         if(!isTakeDamage && (target == null || target.isDeath))
         {
-            canvasHealth.gameObject.SetActive(false);
+            currentHealthBar.gameObject.SetActive(false);
         }    
         
     }    
@@ -425,6 +540,7 @@ public class Character : GameUnit
         }
         managerSO.SetAnimatorCharacter(characterType, currentModel);
         currentModel.OnInit(deg);
+        currentModel.SetCharacterForModel(this);
         currentWeapon = currentModel.CurrentWeapon;
         anim = currentModel.Anim;
     }
@@ -462,8 +578,9 @@ public class Character : GameUnit
             this.state.OnEnter(this);
         }
     }
-    private void OnTriggerEnter(Collider other)
+    public void SpawnCombatText(Vector3 tf, string text, Color color)
     {
-
-    }
+        UICombatText combatText = Instantiate(combatTextUI, TF);
+        combatText.OnInit(tf, text, color);
+    } 
 }

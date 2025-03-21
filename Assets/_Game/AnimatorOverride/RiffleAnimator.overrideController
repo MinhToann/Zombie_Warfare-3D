@@ -9,9 +9,9 @@ AnimatorOverrideController:
   m_Name: RiffleAnimator
   m_Controller: {fileID: 9100000, guid: f25c78fbbd824254d87898731dc08051, type: 2}
   m_Clips:
-  - m_OriginalClip: {fileID: -203655887218126122, guid: 01e84a926fb34d243aa1f172d5e3c05c, type: 3}
-    m_OverrideClip: {fileID: -203655887218126122, guid: b396422ccdda3dd479d060335b5b9d43, type: 3}
-  - m_OriginalClip: {fileID: -203655887218126122, guid: c078c0b849e614c49b48e595a7d9b43d, type: 3}
-    m_OverrideClip: {fileID: -203655887218126122, guid: 6d381d7570162404b8c9d123182c9d57, type: 3}
   - m_OriginalClip: {fileID: -203655887218126122, guid: 8568e2ebc8d49fe4eac888637d108937, type: 3}
     m_OverrideClip: {fileID: -203655887218126122, guid: e40366d11a19fa94fa793598acbb5766, type: 3}
+  - m_OriginalClip: {fileID: -203655887218126122, guid: a1d5232dd7d079c40afc4b9f7727d385, type: 3}
+    m_OverrideClip: {fileID: -203655887218126122, guid: e006ef084a73b4544b2cb7ef202d57c1, type: 3}
+  - m_OriginalClip: {fileID: -203655887218126122, guid: 7be74c56815030f45a23aecc15cb083d, type: 3}
+    m_OverrideClip: {fileID: -203655887218126122, guid: 6d381d7570162404b8c9d123182c9d57, type: 3}

@@ -15,9 +15,9 @@ TagManager:
   - Hero
   - Car
   - Barrier
-  - 
-  - 
-  - 
+  - LockedLevel
+  - UnlockedLevel
+  - Ground
   - 
   - 
   - 

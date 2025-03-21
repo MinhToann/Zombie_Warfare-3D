@@ -2,17 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IdleState : MonoBehaviour
+public class IdleState : IState<Character>
 {
-    // Start is called before the first frame update
-    void Start()
+    public void OnEnter(Character c)
     {
-        
+        c.OnIdleEnter();
     }
-
-    // Update is called once per frame
-    void Update()
+    public void OnExecute(Character c)
     {
-        
+        c.OnIdleExecute();
+    }
+    public void OnExit(Character c)
+    {
+
     }
 }

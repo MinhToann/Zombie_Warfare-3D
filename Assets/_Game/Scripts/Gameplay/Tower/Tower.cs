@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,56 +9,134 @@ public class Tower : GameUnit
     [SerializeField] Image healthBar;
     private float health;
     private float maxHealth;
-    public bool isDestroyed => health <= 0;
+    public bool isDestroyedd => health <= 0;
     private bool isTakeDamage;
     [SerializeField] CanvasHealthBar canvasHealth;
+    [SerializeField] UICombatText combatTextUI;
+    private float currentHealth;
+    public float CurrentHealth => currentHealth;
+    private float timeTakeDamage;
+    [SerializeField] ParticleSystem smokeEffect;
+    [SerializeField] List<ParticleSystem> fireEffect;
+    [SerializeField] Transform spawnPosSmoke;
+    [SerializeField] Transform spawnPosFire;
+    int countEffectSmoke;
+    int countEffectFire;
+    [SerializeField] ParticleSystem boomEffect;
+    private ParticleSystem explosionEffect;
+    //[SerializeField] Transform boomPos;
     private void Start()
     {
         isTakeDamage = false;
         canvasHealth.gameObject.SetActive(false);
         health = maxHealth = HP;
         healthBar.fillAmount = health / maxHealth;
+        currentHealth = healthBar.fillAmount;
+        timeTakeDamage = 5f;
+        countEffectSmoke = 0;
+        countEffectFire = 0;
     }
     public virtual void OnInit()
     {
-        //health = maxHealth = HP;
-        //healthBar.fillAmount = health / maxHealth;
-    }
-    private void Update()
-    {
 
     }
-    protected void OnDespawn()
+    public virtual void Update()
     {
-        EntitiesManager.Ins.OnDespawnTower(this);
-    }
-    public void OnHit(float damage)
-    {
-        if (GameManager.IsState(GameState.Gameplay))
+        if(!isDestroyedd)
         {
-            isTakeDamage = true;
-            canvasHealth.gameObject.SetActive(true);
-            health -= damage;
-            healthBar.fillAmount = health / maxHealth;
-            Invoke(nameof(SetBoolTakeDamage), 1f);
-            if(isDestroyed)
+            if(countEffectSmoke <= 0)
             {
-                OnDespawn();
-            }
+                if (currentHealth >= 0.5f && currentHealth <= 0.8f)
+                {
+                    SpawnSmoke(spawnPosSmoke.position);
+                    if(countEffectSmoke < 2)
+                    {
+                        countEffectSmoke++;
+                    }    
+                    
+                }
+            }    
+            if(countEffectFire <= 0)
+            {
+                if (currentHealth < 0.5f)
+                {
+                    SpawnFire(spawnPosFire.position);
+                    
+                    if (countEffectFire < 2)
+                    {
+                        countEffectFire++;
+                    }    
+                    
+                }
+            }       
         }
-        
-    }
-    private void SetBoolTakeDamage()
-    {
-        isTakeDamage = false;
-        Invoke(nameof(DelayTurnOffHealthBar), 2f);
-    }
-    private void DelayTurnOffHealthBar()
-    {
-        if(!isTakeDamage)
+        else
+        {
+            DespawnEffect();
+        }
+        if (timeTakeDamage > 0)
+        {
+            timeTakeDamage -= Time.deltaTime;
+        }    
+        else
         {
             canvasHealth.gameObject.SetActive(false);
         }    
+    }
+    public void DespawnEffect()
+    {       
+        SpawnBoom(TF.position);
+        OnDespawn();
+    }    
+    protected void OnDespawn()
+    {
+        //ParticlePool.Release(boomEffect);
+        ParticlePool.Release(smokeEffect);
+        for (int i = 0; i < fireEffect.Count; i++)
+        {
+            ParticlePool.Release(fireEffect[i]);
+        }
+        EntitiesManager.Ins.OnDespawnTower(this);
+    }
+    public virtual void OnHit(float damage)
+    {
+        if (GameManager.IsState(GameState.Gameplay))
+        {
+            timeTakeDamage = 5f;
+            canvasHealth.gameObject.SetActive(true);
+            health -= damage;
+            healthBar.fillAmount = health / maxHealth;
+            currentHealth = healthBar.fillAmount;
+            
+            SpawnCombatText(TF.position, $"-{damage}", Color.red);
+        }
         
+    }
+
+    public void SpawnSmoke(Vector3 spawnPos)
+    {
+        ParticlePool.Play(smokeEffect, spawnPos, Quaternion.identity);
+    }    
+    public void SpawnFire(Vector3 spawnPos)
+    {
+        for(int i = 0; i < fireEffect.Count; i++)
+        {
+            ParticlePool.Play(fireEffect[i], spawnPos, Quaternion.identity);
+        }    
+        
+    }    
+    public void SpawnBoom(Vector3 spawnPos)
+    {
+        //ParticlePool.Play(boomEffect, spawnPos, Quaternion.identity);
+        if(explosionEffect != null)
+        {
+            Destroy(explosionEffect.gameObject);
+        }    
+        explosionEffect = Instantiate(boomEffect, spawnPos, Quaternion.identity);
+    }    
+    public void SpawnCombatText(Vector3 tf, string text, Color color)
+    {
+        UICombatText combatText = Instantiate(combatTextUI, TF);
+        combatText.OnInit(tf, text, color);
     }
 }

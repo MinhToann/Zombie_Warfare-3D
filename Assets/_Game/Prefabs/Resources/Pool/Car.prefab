@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1426519644986429100
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5354023277349404400}
+  m_Layer: 8
+  m_Name: BoomPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5354023277349404400
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1426519644986429100}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4193468270940466544}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1887906176480225530
 GameObject:
   m_ObjectHideFlags: 0
@@ -31,6 +62,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4193468270940466544}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2093940029702329445
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 746468089121388942}
+  m_Layer: 8
+  m_Name: SpawnPosCarHero
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &746468089121388942
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2093940029702329445}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.25, y: 0.25, z: -2.25}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4193468270940466544}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2525675124753166079
 GameObject:
   m_ObjectHideFlags: 0
@@ -43,6 +105,7 @@ GameObject:
   - component: {fileID: 6989608871940561653}
   - component: {fileID: 9166502031875713373}
   - component: {fileID: 2767031195151524247}
+  - component: {fileID: 6203611949437845613}
   m_Layer: 8
   m_Name: Car
   m_TagString: Untagged
@@ -66,6 +129,11 @@ Transform:
   - {fileID: 464368687440701736}
   - {fileID: 3077411304234145664}
   - {fileID: 5144685279553791145}
+  - {fileID: 746468089121388942}
+  - {fileID: 6491861610120684408}
+  - {fileID: 1884198515552117319}
+  - {fileID: 7438751939896890923}
+  - {fileID: 5354023277349404400}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &6989608871940561653
@@ -113,9 +181,25 @@ MonoBehaviour:
   cooldownSpawn: 0
   sight: 0
   atkRange: 0
+  effectOfWeapon: {fileID: 0}
   healthBar: {fileID: 5184139903613660841}
   canvasHealth: {fileID: 2746707282420404870}
+  combatTextUI: {fileID: 3564661176201746242, guid: f16561ce99258624cb6bc450bc5c7cc2, type: 3}
+  smokeEffect: {fileID: 805964074656177831, guid: 00ab2e80fdb44eb42b1ddce1e282206d, type: 3}
+  fireEffect:
+  - {fileID: 3450886410490665720, guid: ef18248e99015d04fb09a7ef7586dc7e, type: 3}
+  - {fileID: 1637503025775570843, guid: fc04e9711d8475f4e9d8465c3fe15f3c, type: 3}
+  - {fileID: 4351850872425982016, guid: 8617b23b705d9da47b0ed756cdc9a0c0, type: 3}
+  spawnPosSmoke: {fileID: 1884198515552117319}
+  spawnPosFire: {fileID: 7438751939896890923}
+  boomEffect: {fileID: 2433282508523890284, guid: 3ef3ae421f71c5c4e97fe12dc2fc6312, type: 3}
   spawnPosHero: {fileID: 5144685279553791145}
+  spawnPosCarHero: {fileID: 746468089121388942}
+  targetPosCarHero: {fileID: 6491861610120684408}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  volume: {fileID: 6203611949437845613}
 --- !u!54 &2767031195151524247
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -143,6 +227,116 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &6203611949437845613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2525675124753166079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sharedProfile: {fileID: 11400000, guid: adb18fa2c1119a041af84aaf72061fe9, type: 2}
+  isGlobal: 1
+  blendDistance: 0
+  weight: 1
+  priority: 0
+--- !u!1 &2727741558587370013
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6491861610120684408}
+  m_Layer: 8
+  m_Name: TargetPosCarHero
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6491861610120684408
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2727741558587370013}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.25, y: 0.25, z: -2.25}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4193468270940466544}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3447658642716156711
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1884198515552117319}
+  m_Layer: 8
+  m_Name: SpawnPosSmoke
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1884198515552117319
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3447658642716156711}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.75, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4193468270940466544}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7030742052112177896
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7438751939896890923}
+  m_Layer: 8
+  m_Name: SpawnPosFire
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7438751939896890923
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7030742052112177896}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.75, y: 1.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4193468270940466544}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1115176363717744930
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -359,6 +553,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: -724493364965441153, guid: 006676c397daaf441b866f21e0b14dc7, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 56aa7c96752dde744b6feb96b50086c9, type: 2}
     - target: {fileID: 919132149155446097, guid: 006676c397daaf441b866f21e0b14dc7, type: 3}
       propertyPath: m_Name
       value: suv-luxury
@@ -375,10 +573,26 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 2717756171294132697, guid: 006676c397daaf441b866f21e0b14dc7, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 56aa7c96752dde744b6feb96b50086c9, type: 2}
+    - target: {fileID: 3758833742942399946, guid: 006676c397daaf441b866f21e0b14dc7, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 56aa7c96752dde744b6feb96b50086c9, type: 2}
+    - target: {fileID: 7038207622098808634, guid: 006676c397daaf441b866f21e0b14dc7, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 56aa7c96752dde744b6feb96b50086c9, type: 2}
     - target: {fileID: 7752030738778784939, guid: 006676c397daaf441b866f21e0b14dc7, type: 3}
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 8449996119470504636, guid: 006676c397daaf441b866f21e0b14dc7, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 56aa7c96752dde744b6feb96b50086c9, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

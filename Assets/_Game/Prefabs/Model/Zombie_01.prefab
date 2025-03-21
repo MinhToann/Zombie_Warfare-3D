@@ -197,6 +197,10 @@ PrefabInstance:
       value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -2049929814205202405, guid: a8e9ac0a36f4ad4409c8660a42aece7d, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -2049929814205202405, guid: a8e9ac0a36f4ad4409c8660a42aece7d, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: e0a083f84fcff93469ff6e751067e0a3, type: 2}
@@ -971,7 +975,8 @@ MonoBehaviour:
   anim: {fileID: 6057422987520426310}
   gameObjectType: 50
   spawnPosBullet: {fileID: 0}
-  weaponInHand: {fileID: 7953955637736916332}
+  weaponInHand: {fileID: 7960481856879516539}
+  character: {fileID: 0}
 --- !u!4 &1958679008430867724 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2185512022143744475, guid: a8e9ac0a36f4ad4409c8660a42aece7d, type: 3}
@@ -1034,24 +1039,47 @@ PrefabInstance:
       propertyPath: m_Name
       value: HandFist
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -8463886020724031163, guid: 38272453646a96a4babb12a2ac0bdeae, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7416133156775930590, guid: 38272453646a96a4babb12a2ac0bdeae, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7960481856879516539}
   m_SourcePrefab: {fileID: 100100000, guid: 38272453646a96a4babb12a2ac0bdeae, type: 3}
---- !u!4 &2604997453245487975 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4669902283648098126, guid: 38272453646a96a4babb12a2ac0bdeae, type: 3}
+--- !u!1 &145093560444645111 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7416133156775930590, guid: 38272453646a96a4babb12a2ac0bdeae, type: 3}
   m_PrefabInstance: {fileID: 7271092398705329193}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7953955637736916332 stripped
+--- !u!114 &7960481856879516539
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: -8463886020724031163, guid: 38272453646a96a4babb12a2ac0bdeae, type: 3}
-  m_PrefabInstance: {fileID: 7271092398705329193}
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 145093560444645111}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5bd51e686a5ea9e4fb1f59ac648a3f32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  managerSO: {fileID: 11400000, guid: b8b1a3a9209cae142ab521a067cf6384, type: 2}
+  poolType: 4
+  gameObjectType: 123
+  hp: 0
+  damage: 0
+  moveSpeed: 0
+  atkSpeed: 0
+  nameInfo: 
+  mana: 0
+  cooldownSpawn: 0
+  sight: 0
+  atkRange: 0
+  effectOfWeapon: {fileID: 0}
+--- !u!4 &2604997453245487975 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4669902283648098126, guid: 38272453646a96a4babb12a2ac0bdeae, type: 3}
+  m_PrefabInstance: {fileID: 7271092398705329193}
+  m_PrefabAsset: {fileID: 0}

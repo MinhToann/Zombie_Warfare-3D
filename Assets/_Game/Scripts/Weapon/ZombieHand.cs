@@ -8,5 +8,5 @@ public class ZombieHand : WeaponBase
     {
         base.Attack();
     }
-   
+    
 }

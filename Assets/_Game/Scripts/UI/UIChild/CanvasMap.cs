@@ -2,17 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CanvasMap : MonoBehaviour
+public class CanvasMap : UICanvas
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void Setup()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        base.Setup();
+        GameManager.ChangeState(GameState.Map);
     }
 }

@@ -2,17 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StandUpState : MonoBehaviour
+public class StandUpState : IState<Character>
 {
-    // Start is called before the first frame update
-    void Start()
+    public void OnEnter(Character c)
     {
-        
+        c.OnStandUpEnter();
     }
-
-    // Update is called once per frame
-    void Update()
+    public void OnExecute(Character c)
     {
-        
+        c.OnStandUpExecute();
+    }
+    public void OnExit(Character c)
+    {
+
     }
 }

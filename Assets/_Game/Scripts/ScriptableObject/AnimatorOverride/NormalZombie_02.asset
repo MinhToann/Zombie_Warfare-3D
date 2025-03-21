@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: NormalZombie_02
   m_EditorClassIdentifier: 
   gameObjectType: 51
-  anim: {fileID: 22100000, guid: 3795f3e829dd2f44d853f9355174c513, type: 2}
+  anim: {fileID: 22100000, guid: 86e4c40c61c5d7e4295a4c5ed2de1f4c, type: 2}

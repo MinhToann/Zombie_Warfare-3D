@@ -7,7 +7,7 @@ public class WeaponSO : ScriptableObject
 {
     [SerializeField] PoolType poolType;
     [SerializeField] GameObjectType gameObjectType;
-
+    [SerializeField] ParticleSystem effectOfWeapon;
     [SerializeField] private float damage;
     [SerializeField] private float atkSpeed;
 
@@ -15,4 +15,5 @@ public class WeaponSO : ScriptableObject
     public GameObjectType GOType => gameObjectType;
     public float Damage => damage;
     public float AtkSpeed => atkSpeed;
+    public ParticleSystem EffectOfWeapon => effectOfWeapon;
 }

@@ -979,9 +979,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 552400321155635613}
-  gameObjectType: 0
+  gameObjectType: 2
   spawnPosBullet: {fileID: 1466423855842522023}
   weaponInHand: {fileID: 7787936463064411074}
+  character: {fileID: 0}
 --- !u!1001 &9059376246435438305
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -994,6 +995,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Riffle
       objectReference: {fileID: 0}
+    - target: {fileID: 8864552098242935500, guid: 22406cd890574ed4da358ea7c5cc7543, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -5354028657143720620, guid: 7d934d4e4b6cb2e4f81cceca05202a8a, type: 3}
+    - target: {fileID: 8864552098242935500, guid: 22406cd890574ed4da358ea7c5cc7543, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: -4660651839558579860, guid: 62818f2d8663e4d4d9e944e212d22a7c, type: 3}
+    - target: {fileID: 8864552098242935500, guid: 22406cd890574ed4da358ea7c5cc7543, type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: -3963241562183589234, guid: 8ce444e597a27934b9f78f3a3c04d68c, type: 3}
+    - target: {fileID: 8864552098242935500, guid: 22406cd890574ed4da358ea7c5cc7543, type: 3}
+      propertyPath: m_Materials.Array.data[3]
+      value: 
+      objectReference: {fileID: 2100000, guid: e3f4bb4bca42aa34a99b4f115382844d, type: 2}
+    - target: {fileID: 8864552098242935500, guid: 22406cd890574ed4da358ea7c5cc7543, type: 3}
+      propertyPath: m_Materials.Array.data[4]
+      value: 
+      objectReference: {fileID: 2100000, guid: 431960b094824424bb03011cf66f1270, type: 2}
     - target: {fileID: 8977979652492484235, guid: 22406cd890574ed4da358ea7c5cc7543, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.0023

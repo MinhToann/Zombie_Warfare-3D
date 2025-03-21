@@ -12,13 +12,14 @@ GameObject:
   - component: {fileID: 1923124812620396165}
   - component: {fileID: 5388556203250533262}
   - component: {fileID: 3616355132045838667}
+  - component: {fileID: 1548391109220084300}
   m_Layer: 5
   m_Name: Image_FirstStar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3914149903571422188
 RectTransform:
   m_ObjectHideFlags: 0
@@ -60,7 +61,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 0.9687811, b: 0, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -91,3 +92,15 @@ MonoBehaviour:
   m_EffectColor: {r: 1, g: 0.9686275, b: 0, a: 0.5}
   m_EffectDistance: {x: 10, y: -3}
   m_UseGraphicAlpha: 1
+--- !u!114 &1548391109220084300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7445191484567078920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6576990d27fead14eaaae8d156407bed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

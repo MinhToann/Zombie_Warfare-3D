@@ -5,18 +5,37 @@ using UnityEngine.UI;
 
 public class WaveText : MonoBehaviour
 {
+    private Transform tf;
+    public Transform TF
+    {
+        get
+        {
+            if(tf == null)
+            {
+                tf = transform;
+            }
+            return tf;
+        }
+    }
     [SerializeField] Animator anim;
     private string currentAnim;
     [SerializeField] Text waveText;
 
     private void Start()
     {
-        SetWaveText(LevelManager.Ins.CurLevel.CurrentNumberWave + 1);
+        SetWaveText(LevelManager.Ins.CurrentNumberWave + 1);
     }
     public void OnInit()
-    {        
-        ChangeAnim(Constant.ANIM_WAVE_TEXT);
-        
+    {
+        //TF.localScale = Vector3.zero;
+        ChangeAnim(Constant.ANIM_APPEAR);
+        //Invoke(nameof(ChangeNormalState), 3f);
+    }
+    private void ChangeNormalState()
+    {
+        //ChangeAnim(Constant.ANIM_NORMAL);
+        //TF.localScale = Vector3.zero;
+        Destroy(this.gameObject);
     }
     public void SetWaveText(int number)
     {
